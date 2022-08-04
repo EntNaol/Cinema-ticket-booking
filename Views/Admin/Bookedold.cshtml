@@ -1,0 +1,57 @@
+﻿@model  IEnumerable<OnlineMovie.DM.booking>
+
+@{
+    ViewBag.Title = "Booked";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fas fa-table"></i>
+        Movie
+        <a href="../Admin/MovieAdd" class="btn btn-info pull-right fa fa-plus">Add New</a>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Customer Name</th>
+                        <th>Amount Paid</th>
+                        <th>Seat Catagory</th>
+                        <th>Seat</th>
+
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Customer Name</th>
+                        <th>Amount Paid</th>
+                        <th>Seat Catagory</th>
+                        <th>Seat</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        int count = 1;
+                        <tr>
+                            @*<td>@count</td>*@
+                            <td>@item.</td>
+                            <td>@item.amount_paid</td>
+                            <td>@item.amount_paid</td>
+                            <td>@item.seat_id</td>
+                            <td>
+                                @Html.ActionLink("Delete", "BookedDelete", new { book_id = item.booking_id })
+                            </td>
+                        </tr>
+                        count++;
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0cd016624a4f4db98ebc78afdadd4f33" Name="Diagram1">
+        <EntityTypeShape EntityType="dbMyOnlineMovieModel.booking" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbMyOnlineMovieModel.customer" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbMyOnlineMovieModel.movie" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbMyOnlineMovieModel.movie_catagory" Width="1.5" PointX="1.5" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbMyOnlineMovieModel.schedule" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbMyOnlineMovieModel.seat" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbMyOnlineMovieModel.seatCategory" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbMyOnlineMovieModel.slideImage" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbMyOnlineMovieModel.sysdiagram" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
+        <AssociationConnector Association="dbMyOnlineMovieModel.FK__booking__cust_id__34C8D9D1" ManuallyRouted="false" />
+        <AssociationConnector Association="dbMyOnlineMovieModel.FK__booking__seat_id__35BCFE0A" ManuallyRouted="false" />
+        <AssociationConnector Association="dbMyOnlineMovieModel.FK__customer__movie___31EC6D26" ManuallyRouted="false" />
+        <AssociationConnector Association="dbMyOnlineMovieModel.FK__movie__MovieImag__267ABA7A" ManuallyRouted="false" />
+        <AssociationConnector Association="dbMyOnlineMovieModel.FK__seats__schedule___2E1BDC42" ManuallyRouted="false" />
+        <AssociationConnector Association="dbMyOnlineMovieModel.FK__seats__cat_id__2D27B809" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

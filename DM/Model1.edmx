@@ -1,0 +1,553 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="dbMyOnlineMovieModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="booking">
+          <Key>
+            <PropertyRef Name="booking_id" />
+          </Key>
+          <Property Name="booking_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="amount_paid" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="payment_Type" Type="varchar" MaxLength="50" />
+          <Property Name="cust_id" Type="int" />
+          <Property Name="seat_id" Type="int" />
+        </EntityType>
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="cust_id" />
+          </Key>
+          <Property Name="cust_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cust_FirstName" Type="varchar" MaxLength="20" />
+          <Property Name="cust_LastName" Type="varchar" MaxLength="20" />
+          <Property Name="cust_Email" Type="varchar" MaxLength="50" />
+          <Property Name="cut_Password" Type="varchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="createOn" Type="datetime" />
+          <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="movie_id" Type="int" />
+        </EntityType>
+        <EntityType Name="movie">
+          <Key>
+            <PropertyRef Name="MovieId" />
+          </Key>
+          <Property Name="MovieId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MovieName" Type="varchar" MaxLength="50" />
+          <Property Name="CategoryId" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDelete" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="Description" Type="varchar" MaxLength="500" />
+          <Property Name="rating" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="duration" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="MovieImage" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="movie_catagory">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="varchar" MaxLength="60" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDelete" Type="bit" />
+        </EntityType>
+        <EntityType Name="schedule">
+          <Key>
+            <PropertyRef Name="schedule_id" />
+          </Key>
+          <Property Name="schedule_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date_time" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="seat">
+          <Key>
+            <PropertyRef Name="seat_id" />
+          </Key>
+          <Property Name="seat_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="seat_num" Type="varchar" MaxLength="10" />
+          <Property Name="cat_id" Type="int" />
+          <Property Name="schedule_id" Type="int" />
+          <Property Name="price" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="seatCategory">
+          <Key>
+            <PropertyRef Name="cat_id" />
+          </Key>
+          <Property Name="cat_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cat_name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="slideImage">
+          <Key>
+            <PropertyRef Name="SlideId" />
+          </Key>
+          <Property Name="SlideId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SlideTitle" Type="varchar" MaxLength="50" />
+          <Property Name="SlideImage" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK__booking__cust_id__34C8D9D1">
+          <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
+          <End Role="booking" Type="Self.booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="cust_id" />
+            </Principal>
+            <Dependent Role="booking">
+              <PropertyRef Name="cust_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__booking__seat_id__35BCFE0A">
+          <End Role="seat" Type="Self.seat" Multiplicity="0..1" />
+          <End Role="booking" Type="Self.booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="seat">
+              <PropertyRef Name="seat_id" />
+            </Principal>
+            <Dependent Role="booking">
+              <PropertyRef Name="seat_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__customer__movie___31EC6D26">
+          <End Role="movie" Type="Self.movie" Multiplicity="0..1" />
+          <End Role="customer" Type="Self.customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="movie">
+              <PropertyRef Name="MovieId" />
+            </Principal>
+            <Dependent Role="customer">
+              <PropertyRef Name="movie_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__movie__MovieImag__267ABA7A">
+          <End Role="movie_catagory" Type="Self.movie_catagory" Multiplicity="0..1" />
+          <End Role="movie" Type="Self.movie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="movie_catagory">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="movie">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__seats__cat_id__2D27B809">
+          <End Role="seatCategory" Type="Self.seatCategory" Multiplicity="0..1" />
+          <End Role="seat" Type="Self.seat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="seatCategory">
+              <PropertyRef Name="cat_id" />
+            </Principal>
+            <Dependent Role="seat">
+              <PropertyRef Name="cat_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__seats__schedule___2E1BDC42">
+          <End Role="schedule" Type="Self.schedule" Multiplicity="0..1" />
+          <End Role="seat" Type="Self.seat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="schedule">
+              <PropertyRef Name="schedule_id" />
+            </Principal>
+            <Dependent Role="seat">
+              <PropertyRef Name="schedule_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbMyOnlineMovieModelStoreContainer">
+          <EntitySet Name="booking" EntityType="Self.booking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="customer" EntityType="Self.customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="movie" EntityType="Self.movie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="movie_catagory" EntityType="Self.movie_catagory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="schedule" EntityType="Self.schedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="seat" EntityType="Self.seat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="seatCategory" EntityType="Self.seatCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="slideImage" EntityType="Self.slideImage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__booking__cust_id__34C8D9D1" Association="Self.FK__booking__cust_id__34C8D9D1">
+            <End Role="customer" EntitySet="customer" />
+            <End Role="booking" EntitySet="booking" />
+          </AssociationSet>
+          <AssociationSet Name="FK__booking__seat_id__35BCFE0A" Association="Self.FK__booking__seat_id__35BCFE0A">
+            <End Role="seat" EntitySet="seat" />
+            <End Role="booking" EntitySet="booking" />
+          </AssociationSet>
+          <AssociationSet Name="FK__customer__movie___31EC6D26" Association="Self.FK__customer__movie___31EC6D26">
+            <End Role="movie" EntitySet="movie" />
+            <End Role="customer" EntitySet="customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__movie__MovieImag__267ABA7A" Association="Self.FK__movie__MovieImag__267ABA7A">
+            <End Role="movie_catagory" EntitySet="movie_catagory" />
+            <End Role="movie" EntitySet="movie" />
+          </AssociationSet>
+          <AssociationSet Name="FK__seats__cat_id__2D27B809" Association="Self.FK__seats__cat_id__2D27B809">
+            <End Role="seatCategory" EntitySet="seatCategory" />
+            <End Role="seat" EntitySet="seat" />
+          </AssociationSet>
+          <AssociationSet Name="FK__seats__schedule___2E1BDC42" Association="Self.FK__seats__schedule___2E1BDC42">
+            <End Role="schedule" EntitySet="schedule" />
+            <End Role="seat" EntitySet="seat" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbMyOnlineMovieModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="booking">
+          <Key>
+            <PropertyRef Name="booking_id" />
+          </Key>
+          <Property Name="booking_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="amount_paid" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="payment_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="cust_id" Type="Int32" />
+          <Property Name="seat_id" Type="Int32" />
+          <NavigationProperty Name="customer" Relationship="Self.FK__booking__cust_id__34C8D9D1" FromRole="booking" ToRole="customer" />
+          <NavigationProperty Name="seat" Relationship="Self.FK__booking__seat_id__35BCFE0A" FromRole="booking" ToRole="seat" />
+        </EntityType>
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="cust_id" />
+          </Key>
+          <Property Name="cust_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cust_FirstName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="cust_LastName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="cust_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="cut_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="createOn" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="movie_id" Type="Int32" />
+          <NavigationProperty Name="bookings" Relationship="Self.FK__booking__cust_id__34C8D9D1" FromRole="customer" ToRole="booking" />
+          <NavigationProperty Name="movie" Relationship="Self.FK__customer__movie___31EC6D26" FromRole="customer" ToRole="movie" />
+        </EntityType>
+        <EntityType Name="movie">
+          <Key>
+            <PropertyRef Name="MovieId" />
+          </Key>
+          <Property Name="MovieId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MovieName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CategoryId" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="rating" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="duration" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="MovieImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="customers" Relationship="Self.FK__customer__movie___31EC6D26" FromRole="movie" ToRole="customer" />
+          <NavigationProperty Name="movie_catagory" Relationship="Self.FK__movie__MovieImag__267ABA7A" FromRole="movie" ToRole="movie_catagory" />
+        </EntityType>
+        <EntityType Name="movie_catagory">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsDelete" Type="Boolean" />
+          <NavigationProperty Name="movies" Relationship="Self.FK__movie__MovieImag__267ABA7A" FromRole="movie_catagory" ToRole="movie" />
+        </EntityType>
+        <EntityType Name="schedule">
+          <Key>
+            <PropertyRef Name="schedule_id" />
+          </Key>
+          <Property Name="schedule_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date_time" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="seats" Relationship="Self.FK__seats__schedule___2E1BDC42" FromRole="schedule" ToRole="seat" />
+        </EntityType>
+        <EntityType Name="seat">
+          <Key>
+            <PropertyRef Name="seat_id" />
+          </Key>
+          <Property Name="seat_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="seat_num" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="cat_id" Type="Int32" />
+          <Property Name="schedule_id" Type="Int32" />
+          <Property Name="price" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="bookings" Relationship="Self.FK__booking__seat_id__35BCFE0A" FromRole="seat" ToRole="booking" />
+          <NavigationProperty Name="schedule" Relationship="Self.FK__seats__schedule___2E1BDC42" FromRole="seat" ToRole="schedule" />
+          <NavigationProperty Name="seatCategory" Relationship="Self.FK__seats__cat_id__2D27B809" FromRole="seat" ToRole="seatCategory" />
+        </EntityType>
+        <EntityType Name="seatCategory">
+          <Key>
+            <PropertyRef Name="cat_id" />
+          </Key>
+          <Property Name="cat_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cat_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="seats" Relationship="Self.FK__seats__cat_id__2D27B809" FromRole="seatCategory" ToRole="seat" />
+        </EntityType>
+        <EntityType Name="slideImage">
+          <Key>
+            <PropertyRef Name="SlideId" />
+          </Key>
+          <Property Name="SlideId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SlideTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SlideImage1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK__booking__cust_id__34C8D9D1">
+          <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
+          <End Role="booking" Type="Self.booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="cust_id" />
+            </Principal>
+            <Dependent Role="booking">
+              <PropertyRef Name="cust_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__booking__seat_id__35BCFE0A">
+          <End Role="seat" Type="Self.seat" Multiplicity="0..1" />
+          <End Role="booking" Type="Self.booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="seat">
+              <PropertyRef Name="seat_id" />
+            </Principal>
+            <Dependent Role="booking">
+              <PropertyRef Name="seat_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__customer__movie___31EC6D26">
+          <End Role="movie" Type="Self.movie" Multiplicity="0..1" />
+          <End Role="customer" Type="Self.customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="movie">
+              <PropertyRef Name="MovieId" />
+            </Principal>
+            <Dependent Role="customer">
+              <PropertyRef Name="movie_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__movie__MovieImag__267ABA7A">
+          <End Role="movie_catagory" Type="Self.movie_catagory" Multiplicity="0..1" />
+          <End Role="movie" Type="Self.movie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="movie_catagory">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="movie">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__seats__schedule___2E1BDC42">
+          <End Role="schedule" Type="Self.schedule" Multiplicity="0..1" />
+          <End Role="seat" Type="Self.seat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="schedule">
+              <PropertyRef Name="schedule_id" />
+            </Principal>
+            <Dependent Role="seat">
+              <PropertyRef Name="schedule_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__seats__cat_id__2D27B809">
+          <End Role="seatCategory" Type="Self.seatCategory" Multiplicity="0..1" />
+          <End Role="seat" Type="Self.seat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="seatCategory">
+              <PropertyRef Name="cat_id" />
+            </Principal>
+            <Dependent Role="seat">
+              <PropertyRef Name="cat_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbMyOnlineMovieEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="bookings" EntityType="Self.booking" />
+          <EntitySet Name="customers" EntityType="Self.customer" />
+          <EntitySet Name="movies" EntityType="Self.movie" />
+          <EntitySet Name="movie_catagory" EntityType="Self.movie_catagory" />
+          <EntitySet Name="schedules" EntityType="Self.schedule" />
+          <EntitySet Name="seats" EntityType="Self.seat" />
+          <EntitySet Name="seatCategories" EntityType="Self.seatCategory" />
+          <EntitySet Name="slideImages" EntityType="Self.slideImage" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <AssociationSet Name="FK__booking__cust_id__34C8D9D1" Association="Self.FK__booking__cust_id__34C8D9D1">
+            <End Role="customer" EntitySet="customers" />
+            <End Role="booking" EntitySet="bookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__booking__seat_id__35BCFE0A" Association="Self.FK__booking__seat_id__35BCFE0A">
+            <End Role="seat" EntitySet="seats" />
+            <End Role="booking" EntitySet="bookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__customer__movie___31EC6D26" Association="Self.FK__customer__movie___31EC6D26">
+            <End Role="movie" EntitySet="movies" />
+            <End Role="customer" EntitySet="customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__movie__MovieImag__267ABA7A" Association="Self.FK__movie__MovieImag__267ABA7A">
+            <End Role="movie_catagory" EntitySet="movie_catagory" />
+            <End Role="movie" EntitySet="movies" />
+          </AssociationSet>
+          <AssociationSet Name="FK__seats__schedule___2E1BDC42" Association="Self.FK__seats__schedule___2E1BDC42">
+            <End Role="schedule" EntitySet="schedules" />
+            <End Role="seat" EntitySet="seats" />
+          </AssociationSet>
+          <AssociationSet Name="FK__seats__cat_id__2D27B809" Association="Self.FK__seats__cat_id__2D27B809">
+            <End Role="seatCategory" EntitySet="seatCategories" />
+            <End Role="seat" EntitySet="seats" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbMyOnlineMovieModelStoreContainer" CdmEntityContainer="dbMyOnlineMovieEntities">
+          <EntitySetMapping Name="bookings">
+            <EntityTypeMapping TypeName="dbMyOnlineMovieModel.booking">
+              <MappingFragment StoreEntitySet="booking">
+                <ScalarProperty Name="booking_id" ColumnName="booking_id" />
+                <ScalarProperty Name="amount_paid" ColumnName="amount_paid" />
+                <ScalarProperty Name="payment_Type" ColumnName="payment_Type" />
+                <ScalarProperty Name="cust_id" ColumnName="cust_id" />
+                <ScalarProperty Name="seat_id" ColumnName="seat_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customers">
+            <EntityTypeMapping TypeName="dbMyOnlineMovieModel.customer">
+              <MappingFragment StoreEntitySet="customer">
+                <ScalarProperty Name="cust_id" ColumnName="cust_id" />
+                <ScalarProperty Name="cust_FirstName" ColumnName="cust_FirstName" />
+                <ScalarProperty Name="cust_LastName" ColumnName="cust_LastName" />
+                <ScalarProperty Name="cust_Email" ColumnName="cust_Email" />
+                <ScalarProperty Name="cut_Password" ColumnName="cut_Password" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="createOn" ColumnName="createOn" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="movie_id" ColumnName="movie_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="movies">
+            <EntityTypeMapping TypeName="dbMyOnlineMovieModel.movie">
+              <MappingFragment StoreEntitySet="movie">
+                <ScalarProperty Name="MovieId" ColumnName="MovieId" />
+                <ScalarProperty Name="MovieName" ColumnName="MovieName" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="rating" ColumnName="rating" />
+                <ScalarProperty Name="duration" ColumnName="duration" />
+                <ScalarProperty Name="MovieImage" ColumnName="MovieImage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="movie_catagory">
+            <EntityTypeMapping TypeName="dbMyOnlineMovieModel.movie_catagory">
+              <MappingFragment StoreEntitySet="movie_catagory">
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="schedules">
+            <EntityTypeMapping TypeName="dbMyOnlineMovieModel.schedule">
+              <MappingFragment StoreEntitySet="schedule">
+                <ScalarProperty Name="schedule_id" ColumnName="schedule_id" />
+                <ScalarProperty Name="date_time" ColumnName="date_time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="seats">
+            <EntityTypeMapping TypeName="dbMyOnlineMovieModel.seat">
+              <MappingFragment StoreEntitySet="seat">
+                <ScalarProperty Name="seat_id" ColumnName="seat_id" />
+                <ScalarProperty Name="seat_num" ColumnName="seat_num" />
+                <ScalarProperty Name="cat_id" ColumnName="cat_id" />
+                <ScalarProperty Name="schedule_id" ColumnName="schedule_id" />
+                <ScalarProperty Name="price" ColumnName="price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="seatCategories">
+            <EntityTypeMapping TypeName="dbMyOnlineMovieModel.seatCategory">
+              <MappingFragment StoreEntitySet="seatCategory">
+                <ScalarProperty Name="cat_id" ColumnName="cat_id" />
+                <ScalarProperty Name="cat_name" ColumnName="cat_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="slideImages">
+            <EntityTypeMapping TypeName="dbMyOnlineMovieModel.slideImage">
+              <MappingFragment StoreEntitySet="slideImage">
+                <ScalarProperty Name="SlideId" ColumnName="SlideId" />
+                <ScalarProperty Name="SlideTitle" ColumnName="SlideTitle" />
+                <ScalarProperty Name="SlideImage1" ColumnName="SlideImage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="dbMyOnlineMovieModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

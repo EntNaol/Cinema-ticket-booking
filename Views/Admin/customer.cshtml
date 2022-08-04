@@ -1,0 +1,68 @@
+﻿@model IEnumerable<OnlineMovie.DM.customer>
+
+@{
+    ViewBag.Title = "customer";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<h2>customer</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.cust_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cust_FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cust_LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cust_Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cut_Password)
+        </th>       
+        <th>
+            @Html.DisplayNameFor(model => model.createOn)
+        </th>       
+        <th>
+            @Html.DisplayNameFor(model => model.movie_id)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.cust_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cust_FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cust_LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cust_Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cut_Password)
+        </td>        
+        <td>
+            @Html.DisplayFor(modelItem => item.createOn)
+        </td>       
+        <td>
+            @Html.DisplayFor(modelItem => item.movie_id)
+        </td>
+        <td>            
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

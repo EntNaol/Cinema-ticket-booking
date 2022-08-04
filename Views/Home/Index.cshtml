@@ -1,0 +1,87 @@
+﻿@model OnlineMovie.Models.Home.HomeIndexViewModel
+@using PagedList;
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div id="themeSlider" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#themeSlider" data-slide-to="0" class="active"></li>
+        <li data-target="#themeSlider" data-slide-to="1"></li>
+        <li data-target="#themeSlider" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="item active">
+            <div class="imgOverlay"></div>
+            <img style="height:420px;width:100%" src="../Images/poster.jpg" alt="First slide">
+            <div class="carousel-caption">
+                <h3>New</h3>
+
+            </div>
+        </div>
+        <div class="item">
+            <div class="imgOverlay"></div>
+            <img style="height:420px;width:100%" src="../Images/poster5.jpg" alt="Second slide">
+            <div class="carousel-caption">
+                <h3>My Phone</h3>
+
+            </div>
+        </div>
+        <div class="item">
+            <div class="imgOverlay"></div>
+            <img style="height:420px;width:100%" src="../Images/poster4.jpg" alt="Third slide">
+            <div class="carousel-caption">
+                <h3>Latest</h3>
+
+            </div>
+        </div>
+    </div>
+    <a class="left carousel-control" href="#themeSlider" data-slide="prev">
+        <span class="fa fa-chevron-left"></span>
+    </a>
+    <a class="right carousel-control" href="#themeSlider" data-slide="next">
+        <span class="fa fa-chevron-right"></span>
+    </a>
+</div>
+
+<div class="olContent f1"><h2 style="color:black">Search Movie/Category</h2></div>
+
+<form method="post">
+    <div class="olSearch fr">
+        <input type="text" name="search" placeholder="Enter Keyword" class="inputComn form-control" />
+        <div class="searchIcon">
+            <button type="submit" class="searchBtn">
+                <img src="~/Images/searchIcon.png" />
+            </button>
+        </div>
+    </div>
+</form>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="page-header">
+            <h2><small>Trending Movie</small></h2>
+        </div>
+    </div>
+</div>
+
+<div class="row product-container">
+
+    @foreach (var item in Model.ListOfMovies)
+    {
+        <div class="col-md-3 col-sm-3 col-xs-6" style="margin-bottom:8px;">
+            <div class="thumbnail product-item" style="height:400px;">
+                <img class="img-responsive" title="Click to view movie detail" style="cursor:pointer; height:100%; width:100%" src=@item.MovieImage />
+                @*<p style="visibility:hidden">@item.MovieName</p>*@
+                @Html.ActionLink("Detail", "CheckoutDetails", new { movieId = item.MovieId })
+            </div>
+        </div>
+
+    }
+</div>
+
+<div class="container">
+    @Html.PagedListPager(Model.ListOfMovies, page => Url.Action("Index", new { page, search = Request.QueryString["search"] }), new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded, DisplayItemSliceAndTotal = true })
+</div>
+

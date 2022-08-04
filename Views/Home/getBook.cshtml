@@ -1,0 +1,36 @@
+﻿@model List<OnlineMovie.DM.seat>
+@{
+    ViewBag.Title = "getBook";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>getBook</h2>
+
+<div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Seat Number</th>
+                <th>cat_id</th>
+                <th>schedule_id</th>
+                <th>price</th>
+
+            </tr>
+        </thead>
+       
+        <tbody>
+            @foreach (var item in Model)
+            {                
+                <tr>
+                    <td>@item.seat_num</td>
+                    <td>@item.cat_id</td>
+                    <td>
+                       @item.schedule_id
+                    </td>
+                    <td>@item.price</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

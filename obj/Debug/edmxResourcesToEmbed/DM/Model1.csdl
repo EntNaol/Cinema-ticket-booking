@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dbMyOnlineMovieModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="booking">
+    <Key>
+      <PropertyRef Name="booking_id" />
+    </Key>
+    <Property Name="booking_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="amount_paid" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="payment_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="cust_id" Type="Int32" />
+    <Property Name="seat_id" Type="Int32" />
+    <NavigationProperty Name="customer" Relationship="Self.FK__booking__cust_id__34C8D9D1" FromRole="booking" ToRole="customer" />
+    <NavigationProperty Name="seat" Relationship="Self.FK__booking__seat_id__35BCFE0A" FromRole="booking" ToRole="seat" />
+  </EntityType>
+  <EntityType Name="customer">
+    <Key>
+      <PropertyRef Name="cust_id" />
+    </Key>
+    <Property Name="cust_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="cust_FirstName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="cust_LastName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="cust_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="cut_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDelete" Type="Boolean" />
+    <Property Name="createOn" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+    <Property Name="movie_id" Type="Int32" />
+    <NavigationProperty Name="bookings" Relationship="Self.FK__booking__cust_id__34C8D9D1" FromRole="customer" ToRole="booking" />
+    <NavigationProperty Name="movie" Relationship="Self.FK__customer__movie___31EC6D26" FromRole="customer" ToRole="movie" />
+  </EntityType>
+  <EntityType Name="movie">
+    <Key>
+      <PropertyRef Name="MovieId" />
+    </Key>
+    <Property Name="MovieId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MovieName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CategoryId" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDelete" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="rating" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="duration" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="MovieImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="customers" Relationship="Self.FK__customer__movie___31EC6D26" FromRole="movie" ToRole="customer" />
+    <NavigationProperty Name="movie_catagory" Relationship="Self.FK__movie__MovieImag__267ABA7A" FromRole="movie" ToRole="movie_catagory" />
+  </EntityType>
+  <EntityType Name="movie_catagory">
+    <Key>
+      <PropertyRef Name="CategoryId" />
+    </Key>
+    <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsDelete" Type="Boolean" />
+    <NavigationProperty Name="movies" Relationship="Self.FK__movie__MovieImag__267ABA7A" FromRole="movie_catagory" ToRole="movie" />
+  </EntityType>
+  <EntityType Name="schedule">
+    <Key>
+      <PropertyRef Name="schedule_id" />
+    </Key>
+    <Property Name="schedule_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="date_time" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="seats" Relationship="Self.FK__seats__schedule___2E1BDC42" FromRole="schedule" ToRole="seat" />
+  </EntityType>
+  <EntityType Name="seat">
+    <Key>
+      <PropertyRef Name="seat_id" />
+    </Key>
+    <Property Name="seat_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="seat_num" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="cat_id" Type="Int32" />
+    <Property Name="schedule_id" Type="Int32" />
+    <Property Name="price" Type="Decimal" Precision="18" Scale="0" />
+    <NavigationProperty Name="bookings" Relationship="Self.FK__booking__seat_id__35BCFE0A" FromRole="seat" ToRole="booking" />
+    <NavigationProperty Name="schedule" Relationship="Self.FK__seats__schedule___2E1BDC42" FromRole="seat" ToRole="schedule" />
+    <NavigationProperty Name="seatCategory" Relationship="Self.FK__seats__cat_id__2D27B809" FromRole="seat" ToRole="seatCategory" />
+  </EntityType>
+  <EntityType Name="seatCategory">
+    <Key>
+      <PropertyRef Name="cat_id" />
+    </Key>
+    <Property Name="cat_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="cat_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="seats" Relationship="Self.FK__seats__cat_id__2D27B809" FromRole="seatCategory" ToRole="seat" />
+  </EntityType>
+  <EntityType Name="slideImage">
+    <Key>
+      <PropertyRef Name="SlideId" />
+    </Key>
+    <Property Name="SlideId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SlideTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SlideImage1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK__booking__cust_id__34C8D9D1">
+    <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
+    <End Role="booking" Type="Self.booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="customer">
+        <PropertyRef Name="cust_id" />
+      </Principal>
+      <Dependent Role="booking">
+        <PropertyRef Name="cust_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__booking__seat_id__35BCFE0A">
+    <End Role="seat" Type="Self.seat" Multiplicity="0..1" />
+    <End Role="booking" Type="Self.booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="seat">
+        <PropertyRef Name="seat_id" />
+      </Principal>
+      <Dependent Role="booking">
+        <PropertyRef Name="seat_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__customer__movie___31EC6D26">
+    <End Role="movie" Type="Self.movie" Multiplicity="0..1" />
+    <End Role="customer" Type="Self.customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="movie">
+        <PropertyRef Name="MovieId" />
+      </Principal>
+      <Dependent Role="customer">
+        <PropertyRef Name="movie_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__movie__MovieImag__267ABA7A">
+    <End Role="movie_catagory" Type="Self.movie_catagory" Multiplicity="0..1" />
+    <End Role="movie" Type="Self.movie" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="movie_catagory">
+        <PropertyRef Name="CategoryId" />
+      </Principal>
+      <Dependent Role="movie">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__seats__schedule___2E1BDC42">
+    <End Role="schedule" Type="Self.schedule" Multiplicity="0..1" />
+    <End Role="seat" Type="Self.seat" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="schedule">
+        <PropertyRef Name="schedule_id" />
+      </Principal>
+      <Dependent Role="seat">
+        <PropertyRef Name="schedule_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__seats__cat_id__2D27B809">
+    <End Role="seatCategory" Type="Self.seatCategory" Multiplicity="0..1" />
+    <End Role="seat" Type="Self.seat" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="seatCategory">
+        <PropertyRef Name="cat_id" />
+      </Principal>
+      <Dependent Role="seat">
+        <PropertyRef Name="cat_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="dbMyOnlineMovieEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="bookings" EntityType="Self.booking" />
+    <EntitySet Name="customers" EntityType="Self.customer" />
+    <EntitySet Name="movies" EntityType="Self.movie" />
+    <EntitySet Name="movie_catagory" EntityType="Self.movie_catagory" />
+    <EntitySet Name="schedules" EntityType="Self.schedule" />
+    <EntitySet Name="seats" EntityType="Self.seat" />
+    <EntitySet Name="seatCategories" EntityType="Self.seatCategory" />
+    <EntitySet Name="slideImages" EntityType="Self.slideImage" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <AssociationSet Name="FK__booking__cust_id__34C8D9D1" Association="Self.FK__booking__cust_id__34C8D9D1">
+      <End Role="customer" EntitySet="customers" />
+      <End Role="booking" EntitySet="bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__booking__seat_id__35BCFE0A" Association="Self.FK__booking__seat_id__35BCFE0A">
+      <End Role="seat" EntitySet="seats" />
+      <End Role="booking" EntitySet="bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__customer__movie___31EC6D26" Association="Self.FK__customer__movie___31EC6D26">
+      <End Role="movie" EntitySet="movies" />
+      <End Role="customer" EntitySet="customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__movie__MovieImag__267ABA7A" Association="Self.FK__movie__MovieImag__267ABA7A">
+      <End Role="movie_catagory" EntitySet="movie_catagory" />
+      <End Role="movie" EntitySet="movies" />
+    </AssociationSet>
+    <AssociationSet Name="FK__seats__schedule___2E1BDC42" Association="Self.FK__seats__schedule___2E1BDC42">
+      <End Role="schedule" EntitySet="schedules" />
+      <End Role="seat" EntitySet="seats" />
+    </AssociationSet>
+    <AssociationSet Name="FK__seats__cat_id__2D27B809" Association="Self.FK__seats__cat_id__2D27B809">
+      <End Role="seatCategory" EntitySet="seatCategories" />
+      <End Role="seat" EntitySet="seats" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

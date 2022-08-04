@@ -1,0 +1,85 @@
+﻿@model OnlineMovie.DM.seat
+
+@{
+    ViewBag.Title = "Book";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Book</h2>
+<script> alert("The seat is occupied by another customer please choose another seat")</script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    <div class="form-group" style="display: flex;">
+        <div class="col-md-10">
+            <img src="../Images/standardnew1.jpg" style="margin-right: 20px;" />
+        </div>
+        <div class="col-md-10">
+            <h3>Schedule</h3>
+            <ul>
+                @foreach (var item in ViewBag.schedule)
+                {
+                    <li>Schedule id: @item.schedule_id Time: @item.date_time </li>
+
+                }
+            </ul>
+        </div><div class="col-md-10">
+            <h3>Booked seats</h3>
+            <ul>
+                @foreach (var item in ViewBag.seat_num)
+                {
+                    <li>Seat Number: @item.seat_num  time: @item.schedule_id </li>
+
+                }
+            </ul>
+        </div>
+    </div>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.seat_num, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.seat_num, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.seat_num, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @{
+        List<SelectListItem> data = ViewBag.CategoryList;
+    }
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.cat_id, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.cat_id, data, "---Select---", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.cat_id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @{
+        List<SelectListItem> data2 = ViewBag.ScheduleList;
+    }
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.schedule_id, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.schedule_id, data2, "---Select---", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.schedule_id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
